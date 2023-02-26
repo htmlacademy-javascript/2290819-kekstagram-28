@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Katerina Kravtsova](https://up.htmlacademy.ru/javascript/28/user/2290819).
-* Наставник: `Неизвестно`.
+* Наставник: `Pavel Sevostianov`.
 
 ---
 
