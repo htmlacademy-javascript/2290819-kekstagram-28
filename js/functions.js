@@ -24,6 +24,7 @@ function isPal (word) {
   let newWord = word.split(' ')
   let newString = ''
   for (i = 0; i < newWord.length; i++) {
+    newWord[i] = newWord[i].toLowerCase()
     newString += newWord[i]
   }
 
@@ -34,7 +35,7 @@ function isPal (word) {
     return false
   }
 }
-console.log(isPal('леша на полке клопа нашел'))
+console.log(isPal('holo9holo'))
 
 // Функция№3
 
