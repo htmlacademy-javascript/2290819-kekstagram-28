@@ -1,78 +1,71 @@
-/* Домашнее задание
-Функция №1 для проверки длины строки (2 варианта). */
-
-function checkLength1 (row, maxLen) {
-  console.log(row.length >= maxLen ?  'false' :  'true');
+function checkLength1 (row, maximalLength) {
+  return row.length >= maximalLength ? 'false' : 'true';
 }
 
-checkLength1('hello my name is kate', 40)
+console.log(checkLength1('hello my name is kate', 2));
 
-//Вариант 2
-
-function checkLength2 (row, maxLen) {
-  if (row.length <= maxLen) {
-    return true
+function checkLength2 (row, maximalLength) {
+  if (row.length <= maximalLength) {
+    return true;
   }
-  return false
+  return false;
 }
 
 console.log(checkLength2 ('hi whatsup', 3))
 
-//Функция №2 для проверки палиндромов
-
-function isPal (word) {
-  let newWord = word.split(' ')
-  let newString = ''
-  for (i = 0; i < newWord.length; i++) {
-    newWord[i] = newWord[i].toLowerCase()
-    newString += newWord[i]
+function isPalindrome (word) {
+  const newWord = word.split(' ');
+  let newString = '';
+  for (let i = 0; i < newWord.length; i++) {
+    newWord[i] = newWord[i].toLowerCase();
+    newString += newWord[i];
   }
 
   for (let i = 0; i < newString.length; i++) {
     if (newString[i] === newString.at(-(i + 1))) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 }
-console.log(isPal('holo9holo'))
+console.log(isPalindrome('holo9holo'));
 
-// Функция№3
+function getNumber (row) {
+  if (typeof row === 'number') {
+    row = String(row);
+  }
 
-function getNum (row) {
-  if (typeof row === 'number' )
-  {row = String(row)}
-
-  let newNum = '';
+  let newNumber = '';
 
   for (let i = 0; i < row.length; i++) {
-   if (row[i] === '1' || row[i] === '2' || row[i] === '3' || row[i] === '4' ||row[i] === '5' ||row[i] === '6' ||row[i] === '7' ||row[i] === '8' ||row[i] === '9')
-   {newNum += row[i]}
-
-  }
-  newNum = Number(newNum)
-  if (newNum === 0) {newNum = NaN}
-  return newNum
-}
-
-console.log(getNum(45))
-
-//Функция№4 для добавления элементов в строку
-
-function addElem (row, minLen, addSym) {
-  let newRow = ''
-  let amount = 0
-  if(row.length < minLen)
-    {
-      amount = minLen - row.length
-      for (let i = 0; i < amount-1; i++) {
-        newRow += addSym[i]
-      }
-      newRow += row
+    if (Number(row[i]) <= 9 && Number(row[i] > 0)) {
+      newNumber += row[i];
     }
-  return newRow
+  }
+  newNumber = Number(newNumber);
+  if (newNumber === 0) {
+    newNumber = NaN;
+  }
+  return newNumber;
 }
 
-console.log(addElem('hi', 9, 'befo999о'))
+console.log(getNumber('hello you 77 6 t'));
 
+function addElement (row, minimalLength, addSymbol) {
+  if (typeof row === 'number') {
+    row = String(row);
+  }
+  let newRow = '';
+  let index = 0;
+  while (newRow.length + row.length < minimalLength) {
+    newRow += addSymbol[index];
+    if (index < addSymbol.length - 1) {
+      index++;
+    } else {
+      index = 0;
+    }
+  } row = newRow + row;
+  return row;
+}
 
+console.log(addElement(333888, 10, 'hidden feature'));
