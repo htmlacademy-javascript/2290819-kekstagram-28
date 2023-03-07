@@ -1,26 +1,15 @@
-function checkLength1 (row, maximalLength) {
-  return row.length >= maximalLength ? 'false' : 'true';
+function checkLength (row, maximalLength) {
+  return row.length <= maximalLength;
 }
 
-console.log(checkLength1('hello my name is kate', 2));
-
-function checkLength2 (row, maximalLength) {
-  if (row.length <= maximalLength) {
-    return true;
-  }
-  return false;
-}
-
-console.log(checkLength2 ('hi whatsup', 3))
+export {checkLength};
 
 function isPalindrome (word) {
-  const newWord = word.split(' ');
+  const newWord = word.toLowerCase();
   let newString = '';
   for (let i = 0; i < newWord.length; i++) {
-    newWord[i] = newWord[i].toLowerCase();
     newString += newWord[i];
   }
-
   for (let i = 0; i < newString.length; i++) {
     if (newString[i] === newString.at(-(i + 1))) {
       return true;
@@ -28,17 +17,13 @@ function isPalindrome (word) {
     return false;
   }
 }
-console.log(isPalindrome('holo9holo'));
+
+export {isPalindrome};
 
 function getNumber (row) {
-  if (typeof row === 'number') {
-    row = String(row);
-  }
-
   let newNumber = '';
-
   for (let i = 0; i < row.length; i++) {
-    if (Number(row[i]) <= 9 && Number(row[i] > 0)) {
+    if (row[i] !== ' ' && !Number.isNaN(+row[i])) {
       newNumber += row[i];
     }
   }
@@ -49,12 +34,9 @@ function getNumber (row) {
   return newNumber;
 }
 
-console.log(getNumber('hello you 77 6 t'));
+export {getNumber};
 
 function addElement (row, minimalLength, addSymbol) {
-  if (typeof row === 'number') {
-    row = String(row);
-  }
   let newRow = '';
   let index = 0;
   while (newRow.length + row.length < minimalLength) {
@@ -64,8 +46,9 @@ function addElement (row, minimalLength, addSymbol) {
     } else {
       index = 0;
     }
-  } row = newRow + row;
+  }
+  row = newRow + row;
   return row;
 }
 
-console.log(addElement(333888, 10, 'hidden feature'));
+export {addElement};
