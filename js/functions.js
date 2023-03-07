@@ -53,5 +53,4 @@ function addElement (row, minimalLength, addSymbol) {
 
 export {addElement};
 
-$ git reset —hard 67dc7bde41c9973188bfddcabd7e96d0a8d51ffc
-$ git push —force
+
