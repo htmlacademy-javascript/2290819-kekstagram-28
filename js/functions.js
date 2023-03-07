@@ -52,3 +52,5 @@ function addElement (row, minimalLength, addSymbol) {
 }
 
 export {addElement};
+
+
