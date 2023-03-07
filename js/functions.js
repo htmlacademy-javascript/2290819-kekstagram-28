@@ -7,15 +7,15 @@ export {checkLength};
 function isPalindrome (word) {
   const newWord = word.toLowerCase();
   let newString = '';
-  for (let i = 0; i < newWord.length; i++) {
+  for (let i = newWord.length - 1; i >= 0 ; i--) {
     newString += newWord[i];
   }
-  for (let i = 0; i < newString.length; i++) {
-    if (newString[i] === newString.at(-(i + 1))) {
-      return true;
-    }
-    return false;
+
+  if (newString === newWord) {
+    return true;
   }
+  return false;
+
 }
 
 export {isPalindrome};
