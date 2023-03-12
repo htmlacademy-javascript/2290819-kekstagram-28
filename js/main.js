@@ -1,12 +1,13 @@
-const pictureCount = 25;
-const avatarMinimalCount = 1;
-const avatarMaximalCount = 6;
-const likeMinimalCount = 15;
-const likeMaximalCount = 200;
-const commentMinimalCount = 1;
-const commentMaximalCount = 10;
+const PICTURE_COUNT = 25;
+const AVATAR_MINIMAL_COUNT = 1;
+const AVATAR_MAXIMAL_COUNT = 6;
+const LIKE_MINIMAL_COUNT = 15;
+const LIKE_MAXIMAL_COUNT = 200;
+const COMMENT_MINIMAL_COUNT = 1;
+const COMMENT_MAXIMAL_COUNT = 10;
+const URL_COUNT = 25;
 
-const names = [
+const NAMES = [
   'Лиза',
   'Ангелина',
   'Кристина',
@@ -34,7 +35,7 @@ const names = [
   'Милана'
 ];
 
-const descriptions = [
+const DESCRIPTIONS = [
   'Тост с беконом',
   'Моя собака',
   'Вид из окна',
@@ -50,7 +51,7 @@ const descriptions = [
   'Жизнь без удовольствий',
 ];
 
-const messages = ['Всё отлично!',
+const MESSAGES = ['Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
@@ -58,61 +59,44 @@ const messages = ['Всё отлично!',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
 
-const getRandomPositiveInteger = function (a, b) {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
 
-/*const getRandomValue = function (min, max) {
-  const previousValue = [];
-
-  return function () {
-    let currentValue = getRandomPositiveInteger(min, max);
-    if (previousValue.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValue.includes(currentValue)) {
-      currentValue = getRandomPositiveInteger(min, max);
-    }
-    previousValue.push(currentValue);
-    return currentValue;
-  };
-};*/
-
-const getRandomArrayElement = function (elements) {
-  return elements[getRandomPositiveInteger(0, elements.length - 1)];
-};
-
-/*function createIdGenerator () {
-  let lastGeneratedId = 0;
-
-  return function () {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
-  };
-}*/
-
-const createComment = function(index) {
-  return {
-    id: index,
-    avatar: `img/avatar-${getRandomPositiveInteger(avatarMinimalCount,avatarMaximalCount)}.svg`,
-    message: getRandomArrayElement(messages),
-    name: getRandomArrayElement(names)
+const createRandomIdGenerator = (min, max) => {
+  const ids = Array.from({length: (max - min)}, (_, min) => min + 1);
+  return () => {
+    const randomIndex = getRandomPositiveInteger(min, max);
+    const randomId = ids.splice(randomIndex, 1);
+    return randomId;
   };
 };
 
-const createPicture = function (index) {
-  return {
-    id: index,
-    url: `photos/${index}.jpg`,
-    description: getRandomArrayElement(descriptions),
-    likes: getRandomPositiveInteger(likeMinimalCount, likeMaximalCount),
-    comments: Array.from({length: getRandomPositiveInteger(commentMinimalCount, commentMaximalCount)}, () => createComment())
-  };
-};
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-export const similarObjects = () =>
-  Array.from({length: pictureCount}, (_, pictureIndex) => createPicture(pictureIndex + 1));
+const generateRandomPictureId = createRandomIdGenerator(1, PICTURE_COUNT);
+const generateRandomURLId = createRandomIdGenerator(1, URL_COUNT);
+const generateRandomCommentId = createRandomIdGenerator(COMMENT_MINIMAL_COUNT, COMMENT_MAXIMAL_COUNT);
 
+const createComment = () => ({
+  id: generateRandomCommentId(),
+  avatar: `img/avatar-${getRandomPositiveInteger(AVATAR_MINIMAL_COUNT,AVATAR_MAXIMAL_COUNT)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES)
+});
+
+const createPicture = () => ({
+  id: generateRandomPictureId(),
+  url: `photos/${generateRandomURLId()}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomPositiveInteger(LIKE_MINIMAL_COUNT, LIKE_MAXIMAL_COUNT),
+  comments: Array.from({length: getRandomPositiveInteger(COMMENT_MINIMAL_COUNT, COMMENT_MAXIMAL_COUNT)}, createComment)
+});
+
+const getSimilarObjects = () =>
+  Array.from({length: PICTURE_COUNT}, (_, pictureIndex) => createPicture(pictureIndex + 1));
+
+console.log(getSimilarObjects());
