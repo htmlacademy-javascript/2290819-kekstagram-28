@@ -67,10 +67,10 @@ const getRandomPositiveInteger = (a, b) => {
 };
 
 const createRandomIdGenerator = (min, max) => {
-  const ids = Array.from({length: (max - min)}, (_, min) => min + 1);
+  const ids = Array.from({length: (max - min)}, (_, index) => index + 1);
   return () => {
     const randomIndex = getRandomPositiveInteger(min, max);
-    const randomId = ids.splice(randomIndex, 1);
+    const [randomId] = ids.splice(randomIndex, 1);
     return randomId;
   };
 };
@@ -96,7 +96,5 @@ const createPicture = () => ({
   comments: Array.from({length: getRandomPositiveInteger(COMMENT_MINIMAL_COUNT, COMMENT_MAXIMAL_COUNT)}, createComment)
 });
 
-const getSimilarObjects = () =>
+export const getSimilarObjects = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) => createPicture(pictureIndex + 1));
-
-console.log(getSimilarObjects());
