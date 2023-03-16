@@ -16,6 +16,6 @@ const createRandomIdGenerator = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-export {getRandomArrayElement};
-export {getRandomPositiveInteger};
-export {createRandomIdGenerator};
+export {getRandomArrayElement,
+  getRandomPositiveInteger,
+  createRandomIdGenerator};

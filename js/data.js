@@ -1,6 +1,6 @@
-import {getRandomArrayElement} from './util.js';
-import {getRandomPositiveInteger} from './util.js';
-import {createRandomIdGenerator} from './util.js';
+import {getRandomArrayElement,
+  getRandomPositiveInteger,
+  createRandomIdGenerator} from './util.js';
 
 const PICTURE_COUNT = 25;
 const AVATAR_MINIMAL_COUNT = 1;
