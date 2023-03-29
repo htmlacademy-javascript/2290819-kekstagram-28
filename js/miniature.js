@@ -14,7 +14,6 @@ const renderMiniatures = function(randomMiniatures) {
     fragment.append(picture);
   }
   pictures.appendChild(fragment);
-  return pictures;
 };
 
 export {renderMiniatures};
