@@ -1,19 +1,20 @@
-import {getSimilarObjects} from './data.js';
-
-const fragment = document.createDocumentFragment('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
+const pictures = document.querySelector('.pictures');
 
+const renderMiniatures = function(randomMiniatures) {
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < randomMiniatures.length; i++) {
+    const picture = pictureTemplate.cloneNode(true);
+    const pictureLikes = picture.querySelector('.picture__likes');
+    const pictureComments = picture.querySelector('.picture__comments');
+    const url = picture.querySelector('.picture__img');
+    url.src = randomMiniatures[i].url;
+    pictureLikes.textContent = randomMiniatures[i].likes;
+    pictureComments.textContent = randomMiniatures[i].comments.length;
+    fragment.append(picture);
+  }
+  pictures.appendChild(fragment);
+  return pictures;
+};
 
-const similarObjects = getSimilarObjects();
-for (let i = 0; i < similarObjects.length; i++) {
-  const element = pictureTemplate.cloneNode(true);
-  const pictureLikes = element.querySelector('.picture__likes');
-  const pictureComments = element.querySelector('.picture__comments');
-  const url = element.querySelector('.picture__img');
-  url.setAttribute('src', similarObjects[i].url);
-  pictureLikes.innerHTML = similarObjects[i].likes;
-  pictureComments.innerHTML = similarObjects[i].comments.length;
-
-  fragment.append(element);
-}
-export{fragment};
+export {renderMiniatures};
