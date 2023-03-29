@@ -81,7 +81,7 @@ const createPicture = () => ({
   comments: Array.from({length: getRandomPositiveInteger(COMMENT_MINIMAL_COUNT, COMMENT_MAXIMAL_COUNT)}, createComment)
 });
 
-const getSimilarObjects = () =>
+const getSimilarMiniatures = () =>
   Array.from({length: PICTURE_COUNT}, (_, pictureIndex) => createPicture(pictureIndex + 1));
 
-export {getSimilarObjects};
+export {getSimilarMiniatures};

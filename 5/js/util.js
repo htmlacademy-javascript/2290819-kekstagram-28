@@ -6,9 +6,9 @@ const getRandomPositiveInteger = (a, b) => {
 };
 
 const createRandomIdGenerator = (min, max) => {
-  const ids = Array.from({length: (max - min)}, (_, index) => index + 1);
+  const ids = Array.from({length: (max - min + 1)}, (_, index) => index + 1);
   return () => {
-    const randomIndex = getRandomPositiveInteger(min, max);
+    const randomIndex = getRandomPositiveInteger(min - 1, ids.length - 1);
     const [randomId] = ids.splice(randomIndex, 1);
     return randomId;
   };
