@@ -78,7 +78,7 @@ const createPicture = () => ({
   url: `photos/${generateRandomURLId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomPositiveInteger(LIKE_MINIMAL_COUNT, LIKE_MAXIMAL_COUNT),
-  comments: Array.from({length: getRandomPositiveInteger(COMMENT_MINIMAL_COUNT, COMMENT_MAXIMAL_COUNT)}, createComment)
+  comments: Array.from({length: getRandomPositiveInteger(COMMENT_MINIMAL_COUNT, COMMENT_MAXIMAL_COUNT)},(_, commentIndex) => createComment(commentIndex + 1))
 });
 
 const getSimilarMiniatures = () =>

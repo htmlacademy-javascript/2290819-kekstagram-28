@@ -1,10 +1,3 @@
-import { getSimilarMiniatures } from './data.js';
-import { renderMiniatures } from './miniature.js';
-import './ popup.js';
-
-const similarMiniatures = getSimilarMiniatures();
-renderMiniatures(similarMiniatures);
-
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureSrc = bigPicture.querySelector('img');
 const bigLikes = document.querySelector('.likes-count');
