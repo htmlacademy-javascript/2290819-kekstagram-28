@@ -82,6 +82,6 @@ const createPicture = () => ({
 });
 
 const getSimilarMiniatures = () =>
-  Array.from({length: PICTURE_COUNT}, (_, pictureIndex) => createPicture(pictureIndex + 1));
+  Array.from({length: PICTURE_COUNT}, () => createPicture());
 
 export {getSimilarMiniatures};
