@@ -42,10 +42,6 @@ const addBigPictureContent = (miniature) => {
   socialCaption.textContent = miniature.description;
 };
 
-userModalCloseElement.addEventListener('click', () => {
-  bigPictureClose();
-});
-
 const createComment = (comment) => {
   const commentFragment = commentTemplate.cloneNode(true);
 
@@ -71,7 +67,6 @@ const addBigPictureComments = (comments) => {
   socialComments.appendChild(fragment);
 };
 
-
 const addPictureClickHandler = (picture, miniature) => {
   picture.addEventListener('click', () => {
     addBigPictureContent(miniature);
@@ -79,5 +74,9 @@ const addPictureClickHandler = (picture, miniature) => {
     bigPictureOpen();
   });
 };
+
+userModalCloseElement.addEventListener('click', () => {
+  bigPictureClose();
+});
 
 export { addPictureClickHandler };
