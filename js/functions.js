@@ -1,4 +1,4 @@
-/*function checkLength (row, maximalLength) {
+function checkLength (row, maximalLength) {
   return row.length <= maximalLength;
 }
 
@@ -51,6 +51,9 @@ function addElement (row, minimalLength, addSymbol) {
   return row;
 }
 
-export {addElement};*/
+export {addElement};
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+export {isEscapeKey};
 
 
