@@ -13,8 +13,8 @@ const body = document.querySelector('body');
 
 const commentTemplate = document.querySelector('#comment').content;
 
-commentCount.classList.add('hidden');
-commentLoader.classList.add('hidden');
+commentCount.classList.remove('hidden');
+commentLoader.classList.remove('hidden');
 
 const bigPictureClose = () => {
   bigPicture.classList.add('hidden');
@@ -67,11 +67,31 @@ const addBigPictureComments = (comments) => {
   socialComments.appendChild(fragment);
 };
 
+const showComments = () => {
+  const comments = document.querySelectorAll('.social__comment');
+  if (comments.length > 5) {
+    commentCount.textContent = `5 из ${ comments.length } комментариев`;
+    for (let i = 5; i < comments.length; i++) {
+      comments[i].classList.add('hidden');
+    }
+    commentLoader.addEventListener('click', () => {
+      comments.forEach((comment) => {
+        comment.classList.remove('hidden');
+      });
+      commentCount.textContent = `${comments.length } из ${ comments.length } комментариев`;
+    });
+  } else {
+    commentCount.textContent = `${comments.length } из ${ comments.length } комментариев`;
+  }
+
+};
+
 const addPictureClickHandler = (picture, miniature) => {
   picture.addEventListener('click', () => {
     addBigPictureContent(miniature);
     addBigPictureComments(miniature.comments);
     bigPictureOpen();
+    showComments(miniature.comments);
   });
 };
 
