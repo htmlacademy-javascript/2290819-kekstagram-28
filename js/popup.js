@@ -83,9 +83,6 @@ const addBigPictureComments = (comments) => {
       commentFragment.children[0].classList.add('hidden');
     }
     fragment.appendChild(commentFragment);
-    if (index >= INITIAL_COMMENTS) {
-      fragment.children[index].classList.add('hidden');
-    }
   });
 
   socialComments.appendChild(fragment);
