@@ -51,9 +51,8 @@ function addElement (row, minimalLength, addSymbol) {
   return row;
 }
 
-export {addElement};
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
-export {isEscapeKey};
+export {isEscapeKey,
+  addElement};
 
 
