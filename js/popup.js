@@ -58,10 +58,10 @@ const createComment = (comment) => {
 
 const updateCommentCount = (shownComments, allComments) => {
   commentCount.innerHTML = '';
-  const param2 = document.createElement('span');
-  param2.classList.add('comment-count');
-  param2.textContent = allComments;
-  commentCount.append(Math.min(shownComments, allComments), ' из ', param2, ' комментариев');
+  const totalNumber = document.createElement('span');
+  totalNumber.classList.add('comment-count');
+  totalNumber.textContent = allComments;
+  commentCount.append(Math.min(shownComments, allComments), ' из ', totalNumber, ' комментариев');
 };
 
 const updateCommentLoader = (shownComments, allComments) => {
