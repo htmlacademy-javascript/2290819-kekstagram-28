@@ -1,4 +1,5 @@
 import { isEscapeKey } from './functions.js';
+import { addImgFormValidation } from './validation.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -16,7 +17,7 @@ const onEditorKeydown = (evt) => {
   }
 };
 
-const hashtagFocus = () => {
+const addHashtagFieldListeners = () => {
   hashtagField.addEventListener('focus', () => {
     document.removeEventListener('keydown', onEditorKeydown);
   });
@@ -26,7 +27,7 @@ const hashtagFocus = () => {
   });
 };
 
-const hashtagFocusEditor = () => {
+const addCommentFieldListeners = () => {
   commentField.addEventListener('focus', () => {
     document.removeEventListener('keydown', onEditorKeydown);
   });
@@ -36,34 +37,34 @@ const hashtagFocusEditor = () => {
   });
 };
 
-function openEditor () {
-  uploadFile.addEventListener('change', () => {
-    imgUpload.classList.remove('hidden');
-    body.classList.add('modal-open');
-    document.addEventListener('keydown', onEditorKeydown);
-  });
-}
+const resetImgForm = () => {
+  hashtagField.value = '';
+  commentField.value = '';
+};
 
-function closeEditor () {
+const closeEditor = () => {
   closeImgUpload();
-  imgForm.reset();
+  resetImgForm();
   document.removeEventListener('keydown', onEditorKeydown);
-}
+};
 
 function closeImgUpload () {
   imgUpload.classList.add('hidden');
   body.classList.remove('modal-open');
 }
 
-const form = function() {
-  uploadFile.addEventListener('click', () => {
-    openEditor();
+const initializeUploadForm = () => {
+  uploadFile.addEventListener('change', () => {
+    imgUpload.classList.remove('hidden');
+    body.classList.add('modal-open');
+    document.addEventListener('keydown', onEditorKeydown);
   });
   closeButton.addEventListener('click', () => {
     closeEditor();
   });
-  hashtagFocus();
-  hashtagFocusEditor();
+  addHashtagFieldListeners();
+  addCommentFieldListeners();
+  addImgFormValidation();
 };
 
-export {form};
+export {initializeUploadForm};
