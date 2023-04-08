@@ -8,7 +8,15 @@ const imgForm = document.querySelector('.img-upload__form');
 const body = document.querySelector('body');
 const hashtagField = imgForm.querySelector('.text__hashtags');
 const commentField = imgForm.querySelector('.text__description');
+const imgUploadInput = imgForm.querySelector('.img-upload__input');
+const scaleControl = imgForm.querySelector('.scale__control--value');
+const effectLevelValue = imgForm.querySelector('.effect-level__value');
+const effectDefault = imgForm.querySelectorAll('#effect-none');
 
+const closeImgUpload = () => {
+  imgUpload.classList.add('hidden');
+  body.classList.remove('modal-open');
+};
 
 const onEditorKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -40,6 +48,10 @@ const addCommentFieldListeners = () => {
 const resetImgForm = () => {
   hashtagField.value = '';
   commentField.value = '';
+  imgUploadInput.value = '';
+  scaleControl.value = '100%';
+  effectLevelValue.value = '100%';
+  effectDefault.checked = true;
 };
 
 const closeEditor = () => {
@@ -48,17 +60,15 @@ const closeEditor = () => {
   document.removeEventListener('keydown', onEditorKeydown);
 };
 
-function closeImgUpload () {
-  imgUpload.classList.add('hidden');
-  body.classList.remove('modal-open');
-}
+const openEditor = () => {
+  resetImgForm();
+  imgUpload.classList.remove('hidden');
+  body.classList.add('modal-open');
+  document.addEventListener('keydown', onEditorKeydown);
+};
 
 const initializeUploadForm = () => {
-  uploadFile.addEventListener('change', () => {
-    imgUpload.classList.remove('hidden');
-    body.classList.add('modal-open');
-    document.addEventListener('keydown', onEditorKeydown);
-  });
+  uploadFile.addEventListener('change', openEditor);
   closeButton.addEventListener('click', () => {
     closeEditor();
   });
