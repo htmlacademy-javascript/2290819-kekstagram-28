@@ -3,26 +3,29 @@ const scaleSmaller = scale.querySelector('.scale__control--smaller');
 const scaleBigger = scale.querySelector('.scale__control--bigger');
 const scaleValue = scale.querySelector('.scale__control--value');
 const picture = document.querySelector('.img-upload__preview');
+const COMMENTS_STEP = 25;
+const MAXIMAL_VALUE = '100%';
+const MINIMAL_VALUE = '25%';
 
 
 const getBiggerScale = () => {
-  if (scaleValue.value !== '100%') {
-    scaleValue.value = `${Number(scaleValue.value.slice(0, scaleValue.value.length - 1)) + 25}%`;
+  if (scaleValue.value !== MAXIMAL_VALUE) {
+    scaleValue.value = `${Number.parseFloat(scaleValue.value) + COMMENTS_STEP}%`;
+    picture.style.transform = `scale(${Number.parseFloat(scaleValue.value) * 0.01})`;
+
   }
 };
 
 const getSmallerScale = () => {
-  if (scaleValue.value !== '25%') {
-    scaleValue.value = `${Number(scaleValue.value.slice(0, scaleValue.value.length - 1)) - 25}%`;
+  if (scaleValue.value !== MINIMAL_VALUE) {
+    scaleValue.value = `${Number.parseFloat(scaleValue.value) - COMMENTS_STEP}%`;
+    picture.style.transform = `scale(${Number.parseFloat(scaleValue.value) * 0.01})`;
   }
 };
 
 const changePicture = () => {
   scaleSmaller.addEventListener('click', getSmallerScale);
   scaleBigger.addEventListener('click', getBiggerScale);
-  scaleBigger.addEventListener('click', () => {
-    picture.style.transform = `scale(${Number(scaleValue.value.slice(0, scaleValue.value.length - 1)) * 0.01})`;
-  });
 };
 
 export {changePicture};

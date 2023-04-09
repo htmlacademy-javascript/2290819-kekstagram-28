@@ -1,5 +1,7 @@
 import { isEscapeKey } from './functions.js';
 import { addImgFormValidation } from './validation.js';
+import { changePicture } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -13,9 +15,19 @@ const scaleControl = imgForm.querySelector('.scale__control--value');
 const effectLevelValue = imgForm.querySelector('.effect-level__value');
 const effectDefault = imgForm.querySelectorAll('#effect-none');
 
+const resetImgForm = () => {
+  hashtagField.value = '';
+  commentField.value = '';
+  imgUploadInput.value = '';
+  scaleControl.value = '100%';
+  effectLevelValue.value = '100%';
+  effectDefault.checked = true;
+};
+
 const closeImgUpload = () => {
   imgUpload.classList.add('hidden');
   body.classList.remove('modal-open');
+  resetImgForm();
 };
 
 const onEditorKeydown = (evt) => {
@@ -45,18 +57,8 @@ const addCommentFieldListeners = () => {
   });
 };
 
-const resetImgForm = () => {
-  hashtagField.value = '';
-  commentField.value = '';
-  imgUploadInput.value = '';
-  scaleControl.value = '100%';
-  effectLevelValue.value = '100%';
-  effectDefault.checked = true;
-};
-
 const closeEditor = () => {
   closeImgUpload();
-  resetImgForm();
   document.removeEventListener('keydown', onEditorKeydown);
 };
 
@@ -68,6 +70,7 @@ const openEditor = () => {
 };
 
 const initializeUploadForm = () => {
+  resetImgForm();
   uploadFile.addEventListener('change', openEditor);
   closeButton.addEventListener('click', () => {
     closeEditor();
@@ -75,6 +78,8 @@ const initializeUploadForm = () => {
   addHashtagFieldListeners();
   addCommentFieldListeners();
   addImgFormValidation();
+  changePicture();
+  resetEffects();
 };
 
 export {initializeUploadForm};
