@@ -1,5 +1,8 @@
 import { isEscapeKey } from './functions.js';
 import { addImgFormValidation } from './validation.js';
+import { changePicture } from './scale.js';
+import { resetEffects } from './effects.js';
+const picture = document.querySelector('.img-upload__preview');
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -11,11 +14,24 @@ const commentField = imgForm.querySelector('.text__description');
 const imgUploadInput = imgForm.querySelector('.img-upload__input');
 const scaleControl = imgForm.querySelector('.scale__control--value');
 const effectLevelValue = imgForm.querySelector('.effect-level__value');
-const effectDefault = imgForm.querySelectorAll('#effect-none');
+const effectDefault = imgForm.querySelector('#effect-none');
+
+const resetImgForm = () => {
+  picture.style.transform = 'scale(1)';
+  resetEffects();
+  hashtagField.value = '';
+  commentField.value = '';
+  imgUploadInput.value = '';
+  scaleControl.value = '100%';
+  effectLevelValue.value = '100%';
+  effectDefault.checked = true;
+};
 
 const closeImgUpload = () => {
   imgUpload.classList.add('hidden');
   body.classList.remove('modal-open');
+  resetImgForm();
+  resetEffects();
 };
 
 const onEditorKeydown = (evt) => {
@@ -45,36 +61,29 @@ const addCommentFieldListeners = () => {
   });
 };
 
-const resetImgForm = () => {
-  hashtagField.value = '';
-  commentField.value = '';
-  imgUploadInput.value = '';
-  scaleControl.value = '100%';
-  effectLevelValue.value = '100%';
-  effectDefault.checked = true;
-};
-
 const closeEditor = () => {
   closeImgUpload();
-  resetImgForm();
   document.removeEventListener('keydown', onEditorKeydown);
 };
 
 const openEditor = () => {
-  resetImgForm();
   imgUpload.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onEditorKeydown);
 };
 
 const initializeUploadForm = () => {
+  resetEffects();
+  resetImgForm();
   uploadFile.addEventListener('change', openEditor);
-  closeButton.addEventListener('click', () => {
+  closeButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
     closeEditor();
   });
   addHashtagFieldListeners();
   addCommentFieldListeners();
   addImgFormValidation();
+  changePicture();
 };
 
 export {initializeUploadForm};

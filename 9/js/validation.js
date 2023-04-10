@@ -50,8 +50,8 @@ pristine.addValidator(
   WRONG_COMMENTS
 );
 
-const addImgFormValidation = () => {
-  imgForm.addEventListener('submit', (evt) => {
+const addImgFormValidation = (evt) => {
+  imgForm.addEventListener('submit', () => {
     if (!pristine.validate()) {
       evt.preventDefault();
     }
