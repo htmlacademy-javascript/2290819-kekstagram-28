@@ -31,7 +31,6 @@ const closeImgUpload = () => {
   imgUpload.classList.add('hidden');
   body.classList.remove('modal-open');
   resetImgForm();
-  resetEffects();
 };
 
 const onEditorKeydown = (evt) => {
@@ -73,7 +72,6 @@ const openEditor = () => {
 };
 
 const initializeUploadForm = () => {
-  resetEffects();
   resetImgForm();
   uploadFile.addEventListener('change', openEditor);
   closeButton.addEventListener('click', (evt) => {
