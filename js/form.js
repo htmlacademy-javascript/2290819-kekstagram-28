@@ -2,8 +2,8 @@ import { isEscapeKey } from './functions.js';
 import { addImgFormValidation } from './validation.js';
 import { changePicture } from './scale.js';
 import { resetEffects } from './effects.js';
-const picture = document.querySelector('.img-upload__preview');
 
+const picture = document.querySelector('.img-upload__preview');
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('#upload-cancel');
@@ -71,6 +71,7 @@ const openEditor = () => {
   document.addEventListener('keydown', onEditorKeydown);
 };
 
+
 const initializeUploadForm = () => {
   resetImgForm();
   uploadFile.addEventListener('change', openEditor);
@@ -84,4 +85,4 @@ const initializeUploadForm = () => {
   changePicture();
 };
 
-export {initializeUploadForm};
+export {initializeUploadForm, closeImgUpload};

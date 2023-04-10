@@ -1,5 +1,9 @@
-const imgForm = document.querySelector('.img-upload__form');
+import { showErrorModal, showSuccessModal } from './modals.js';
+import { getData } from './fetch.js';
+import { closeImgUpload } from './form.js';
+import { isEscapeKey } from './functions.js';
 
+const imgForm = document.querySelector('.img-upload__form');
 const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const WRONG_HASHTAG = 'Хэштеги указаны неверно';
 const WRONG_COMMENTS = 'Вы превысили максимальную длину комментария';
@@ -50,10 +54,28 @@ pristine.addValidator(
   WRONG_COMMENTS
 );
 
+function onEscKeyDown (evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+  }
+}
+
+const onImageLoadEscKeyDown = (evt) => onEscKeyDown(evt, closeImgUpload);
+
 const addImgFormValidation = () => {
   imgForm.addEventListener('submit', (evt) => {
     if (!pristine.validate()) {
       evt.preventDefault();
+      getData(new FormData(evt.target))
+        .then(() => {
+          showSuccessModal();
+          closeImgUpload();
+        })
+        .catch(() => {
+          document.removeEventListener('keydown', onImageLoadEscKeyDown);
+          showErrorModal(onImageLoadEscKeyDown);
+        })
+        .finally();
     }
   });
 };
