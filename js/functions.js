@@ -57,7 +57,6 @@ const ALERT_MESSAGE = 5000;
 
 const showAlert = (message) => {
   const alertBlock = document.createElement('div');
-  alertBlock.classList.add('alert-class');
   alertBlock.textContent = message;
   document.body.append(alertBlock);
 
@@ -66,13 +65,13 @@ const showAlert = (message) => {
   }, ALERT_MESSAGE);
 };
 
-function debounce (callback, timeoutDelay) {
+const debounce = (callback, timeoutDelay) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 
 export { isEscapeKey, addElement, showAlert, debounce };

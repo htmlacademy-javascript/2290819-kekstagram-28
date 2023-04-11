@@ -14,7 +14,10 @@ const onOuterBodyClick = (evt) => {
   }
 };
 
-const onModalEscKeydown = (evt) => isEscapeKey(evt, closeActiveModal);
+const onModalEscKeydown = (evt) => {
+  isEscapeKey(evt);
+  closeActiveModal();
+};
 
 const showModal = (type) => {
   activeModalType = type;
@@ -46,5 +49,5 @@ const showErrorModal = (escKeydownCallback) => {
   showModal('error');
 };
 
-export {showSuccessModal, showErrorModal};
+export {showSuccessModal, showErrorModal, closeActiveModal};
 
