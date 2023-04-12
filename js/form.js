@@ -14,6 +14,7 @@ const commentField = imgForm.querySelector('.text__description');
 const scaleControl = imgForm.querySelector('.scale__control--value');
 const effectLevelValue = imgForm.querySelector('.effect-level__value');
 const effectDefault = imgForm.querySelector('#effect-none');
+const shownPhoto = document.querySelector('.img-upload__preview img');
 
 const resetImgForm = () => {
   picture.style.transform = 'scale(1)';
@@ -70,6 +71,8 @@ const openEditor = () => {
   imgUpload.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onEditorKeydown);
+  const file = uploadFile.files[0];
+  shownPhoto.src = URL.createObjectURL(file);
 };
 
 
