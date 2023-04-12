@@ -3,7 +3,15 @@ import { addPictureClickHandler } from './popup.js';
 const pictureTemplate = document.querySelector('#picture').content;
 const pictures = document.querySelector('.pictures');
 
+const deleteMiniatures = () => {
+  const miniatures = document.querySelectorAll('.picture');
+  miniatures.forEach((miniature) => {
+    miniature.remove();
+  });
+};
+
 const renderMiniatures = (miniatures) => {
+  deleteMiniatures();
   const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < miniatures.length; i++) {

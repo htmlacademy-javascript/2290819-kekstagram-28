@@ -1,21 +1,23 @@
-//import { getData } from './fetch.js';
 import { renderMiniatures } from './miniature.js';
-import { getRandomPositiveInteger } from './util.js';
-
-const filtersForm = document.querySelector('.img-fiters__form');
-const filterButtons = document.querySelectorAll('.img-filters_button');
+import { createRandomIdGenerator } from './util.js';
+import { debounce } from './functions.js';
 
 const PICTURES_NUMBER = 10;
+const RERENDER_MINIATURES_TIMEOUT = 500;
 
-const Filter = {
-  DEFAULT: 'filter-default',
-  RANDOM: 'filter-random',
-  POPULAR: 'filter-discussed'
+const filters = document.querySelector('.img-filters');
+const filterDefault = document.querySelector('#filter-default');
+const filterRandom = document.querySelector('#filter-random');
+const filterDiscussed = document.querySelector('#filter-discussed');
+
+
+let chosenFilter = filterDefault;
+
+const renderMiniaturesDebounce = debounce(renderMiniatures, RERENDER_MINIATURES_TIMEOUT);
+
+const showFilters = () => {
+  filters.classList.remove('img-filters--inactive');
 };
-
-let chosenFilter = Filter.DEFAULT;
-
-const compareRandomly = () => getRandomPositiveInteger(1, PICTURES_NUMBER);
 
 const getCommentRank = (picture) => picture.comments.length;
 
@@ -26,30 +28,58 @@ const compareByComments = (pictureA, pictureB) => {
   return rankB - rankA;
 };
 
-const getFilteredPictures = (miniatures) => {
-  const newMiniatures = renderMiniatures(miniatures);
-  switch (chosenFilter) {
-    case Filter.RANDOM:
-      return newMiniatures.sort(compareRandomly).slice(0, PICTURES_NUMBER);
-    case Filter.DISCUSSED:
-      return newMiniatures.sort(compareByComments);
-    default:
-      return newMiniatures;
-  }
+
+const updateChosenFilter = () => {
+  filterDefault.classList.remove('img-filters__button--active');
+  filterRandom.classList.remove('img-filters__button--active');
+  filterDiscussed.classList.remove('img-filters__button--active');
+  chosenFilter.classList.add('img-filters__button--active');
 };
 
-const setOnFilterClick = () => {
-  filtersForm.addEventListener('click', (evt) => {
-    filterButtons.forEach((item) => item.classList.remove('img-filters__button--active'));
-    evt.target.classList.add('img-filters__button--active');
-    chosenFilter = evt.target.id;
-    //cb(getFilteredPictures());
+const renderMiniaturesByDefault = (miniatures) => {
+  renderMiniaturesDebounce(miniatures);
+};
+
+const renderMiniaturesRandomly = (miniatures) => {
+  const getRandomIndex = createRandomIdGenerator(0, miniatures.length - 1);
+
+  const thumbnails = [];
+  for (let i = 0; i < PICTURES_NUMBER; i++) {
+    thumbnails.push(miniatures[getRandomIndex()]);
+  }
+
+  renderMiniaturesDebounce(thumbnails);
+};
+
+const renderMiniaturesByComments = (miniatures) => {
+  const thumbnails = miniatures
+    .slice()
+    .sort(compareByComments);
+
+  renderMiniaturesDebounce(thumbnails);
+};
+
+
+const initializeFilters = (loadedPictures) => {
+  showFilters();
+
+  filterDefault.addEventListener('click', () => {
+    chosenFilter = filterDefault;
+    updateChosenFilter();
+    renderMiniaturesByDefault(loadedPictures);
+  });
+
+  filterRandom.addEventListener('click', () => {
+    chosenFilter = filterRandom;
+    updateChosenFilter();
+    renderMiniaturesRandomly(loadedPictures);
+  });
+
+  filterDiscussed.addEventListener('click', () => {
+    chosenFilter = filterDiscussed;
+    updateChosenFilter();
+    renderMiniaturesByComments(loadedPictures);
   });
 };
 
-const init = (loadedPictures) => {
-  setOnFilterClick();
-  getFilteredPictures(loadedPictures);
-};
-
-export { getFilteredPictures, init, setOnFilterClick };
+export { initializeFilters };
