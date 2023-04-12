@@ -1,5 +1,3 @@
-const picture = document.querySelector('.img-upload__preview');
-
 const EFFECTS = [
   {
     name: 'none',
@@ -54,6 +52,7 @@ const DEFAULT_EFFECTS_VALUE = 100;
 const DEFAULT_EFFECT = EFFECTS[0];
 let chosenEffect = DEFAULT_EFFECT;
 
+const picture = document.querySelector('.img-upload__preview');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectsElement = document.querySelector('.effects');
@@ -91,7 +90,7 @@ const onEffectsChange = (evt) => {
     return;
   }
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-  picture.className = `effects__preview--${chosenEffect.name}`;
+  picture.className = `effects__preview--${chosenEffect.name} img-upload__preview`;
   updateSlider();
 };
 

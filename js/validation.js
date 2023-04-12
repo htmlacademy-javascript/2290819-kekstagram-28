@@ -1,14 +1,15 @@
+const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
+const WRONG_HASHTAG = 'Хэштеги указаны неверно';
+const WRONG_COMMENTS = 'Вы превысили максимальную длину комментария';
+const MAXIMAL_COUNT_HASTAGS = 5;
+const MAXIMAL_COMMENTS_LENGTH = 140;
+
 import { showErrorModal, showSuccessModal } from './modals.js';
 import { sendData } from './fetch.js';
 import { closeEditor } from './form.js';
 
 const imgForm = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
-const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
-const WRONG_HASHTAG = 'Хэштеги указаны неверно';
-const WRONG_COMMENTS = 'Вы превысили максимальную длину комментария';
-const MAXIMAL_COUNT_HASTAGS = 5;
-const MAXIMAL_COMMENTS_LENGTH = 140;
 
 const hashtagText = imgForm.querySelector('.text__hashtags');
 const commentsText = imgForm.querySelector('.text__description');
@@ -76,4 +77,4 @@ const addImgFormValidation = () => {
   });
 };
 
-export {addImgFormValidation};
+export {addImgFormValidation, pristine};
