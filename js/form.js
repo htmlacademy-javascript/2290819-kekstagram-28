@@ -1,5 +1,5 @@
 import { isEscapeKey } from './functions.js';
-import { addImgFormValidation } from './validation.js';
+import { addImgFormValidation, pristine } from './validation.js';
 import { changePicture } from './scale.js';
 import { resetEffects } from './effects.js';
 
@@ -25,6 +25,7 @@ const resetImgForm = () => {
   scaleControl.value = '100%';
   effectLevelValue.value = '100%';
   effectDefault.checked = true;
+  pristine.reset();
 };
 
 const closeImgUpload = (isReset = true) => {
