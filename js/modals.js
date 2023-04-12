@@ -6,7 +6,6 @@ const Modals = {
 };
 
 let activeModalType = null;
-let globalEscKeydownCallback = null;
 
 const onOuterBodyClick = (evt) => {
   if (!evt.target.closest(`.${activeModalType}__inner`)) {
@@ -15,8 +14,9 @@ const onOuterBodyClick = (evt) => {
 };
 
 const onModalEscKeydown = (evt) => {
-  isEscapeKey(evt);
-  closeActiveModal();
+  if (isEscapeKey(evt)) {
+    closeActiveModal();
+  }
 };
 
 const showModal = (type) => {
@@ -31,7 +31,6 @@ function closeActiveModal() {
   activeModalType = null;
   document.removeEventListener('click', onOuterBodyClick);
   document.removeEventListener('keydown', onModalEscKeydown);
-  document.addEventListener('keydown', globalEscKeydownCallback);
 }
 
 function getModalElement(type) {
@@ -44,10 +43,7 @@ function getModalElement(type) {
 }
 
 const showSuccessModal = () => showModal('success');
-const showErrorModal = (escKeydownCallback) => {
-  globalEscKeydownCallback = escKeydownCallback;
-  showModal('error');
-};
+const showErrorModal = () => showModal('error');
 
 export {showSuccessModal, showErrorModal, closeActiveModal};
 

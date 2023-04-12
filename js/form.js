@@ -11,7 +11,6 @@ const imgForm = document.querySelector('.img-upload__form');
 const body = document.querySelector('body');
 const hashtagField = imgForm.querySelector('.text__hashtags');
 const commentField = imgForm.querySelector('.text__description');
-const imgUploadInput = imgForm.querySelector('.img-upload__input');
 const scaleControl = imgForm.querySelector('.scale__control--value');
 const effectLevelValue = imgForm.querySelector('.effect-level__value');
 const effectDefault = imgForm.querySelector('#effect-none');
@@ -21,16 +20,18 @@ const resetImgForm = () => {
   resetEffects();
   hashtagField.value = '';
   commentField.value = '';
-  imgUploadInput.value = '';
+  uploadFile.value = '';
   scaleControl.value = '100%';
   effectLevelValue.value = '100%';
   effectDefault.checked = true;
 };
 
-const closeImgUpload = () => {
+const closeImgUpload = (isReset = true) => {
   imgUpload.classList.add('hidden');
   body.classList.remove('modal-open');
-  resetImgForm();
+  if (isReset) {
+    resetImgForm();
+  }
 };
 
 const onEditorKeydown = (evt) => {
@@ -60,8 +61,8 @@ const addCommentFieldListeners = () => {
   });
 };
 
-const closeEditor = () => {
-  closeImgUpload();
+const closeEditor = (isReset = true) => {
+  closeImgUpload(isReset);
   document.removeEventListener('keydown', onEditorKeydown);
 };
 
@@ -74,6 +75,12 @@ const openEditor = () => {
 
 const initializeUploadForm = () => {
   resetImgForm();
+  uploadFile.addEventListener('click', (evt) => {
+    if (uploadFile.value !== '') {
+      evt.preventDefault();
+      openEditor();
+    }
+  });
   uploadFile.addEventListener('change', openEditor);
   closeButton.addEventListener('click', (evt) => {
     evt.preventDefault();
@@ -85,4 +92,4 @@ const initializeUploadForm = () => {
   changePicture();
 };
 
-export {initializeUploadForm, closeImgUpload};
+export {initializeUploadForm, closeEditor};

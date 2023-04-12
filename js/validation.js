@@ -1,11 +1,9 @@
 import { showErrorModal, showSuccessModal } from './modals.js';
 import { sendData } from './fetch.js';
-import { closeImgUpload } from './form.js';
-import { isEscapeKey } from './functions.js';
-import { closeActiveModal } from './modals.js';
+import { closeEditor } from './form.js';
 
 const imgForm = document.querySelector('.img-upload__form');
-const button = document.querySelector('.img-upload__submit');
+const submitButton = document.querySelector('.img-upload__submit');
 const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const WRONG_HASHTAG = 'Хэштеги указаны неверно';
 const WRONG_COMMENTS = 'Вы превысили максимальную длину комментария';
@@ -56,43 +54,25 @@ pristine.addValidator(
   WRONG_COMMENTS
 );
 
-function onEscKeyDown (evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-  }
-}
-
-const onImageLoadEscKeyDown = (evt) => {
-  onEscKeyDown(evt);
-};
-
-const closeMessage = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeActiveModal();
-  }
-};
 
 const addImgFormValidation = () => {
   imgForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      button.disabled = true;
+      submitButton.disabled = true;
       sendData(new FormData(evt.target))
         .then(() => {
           showSuccessModal();
-          closeImgUpload();
-          document.addEventListener('keydown', closeMessage());
+          closeEditor();
         })
         .catch(() => {
-          showErrorModal(onImageLoadEscKeyDown);
+          showErrorModal();
+          closeEditor(false);
         })
-        .finally();
-    } else {
-      showErrorModal(onImageLoadEscKeyDown);
-      document.addEventListener('keydown', closeMessage());
+        .finally(() => {
+          submitButton.disabled = false;
+        });
     }
-    button.disabled = false;
   });
 };
 
