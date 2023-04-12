@@ -1,5 +1,9 @@
-const imgForm = document.querySelector('.img-upload__form');
+import { showErrorModal, showSuccessModal } from './modals.js';
+import { sendData } from './fetch.js';
+import { closeEditor } from './form.js';
 
+const imgForm = document.querySelector('.img-upload__form');
+const submitButton = document.querySelector('.img-upload__submit');
 const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const WRONG_HASHTAG = 'Хэштеги указаны неверно';
 const WRONG_COMMENTS = 'Вы превысили максимальную длину комментария';
@@ -50,10 +54,24 @@ pristine.addValidator(
   WRONG_COMMENTS
 );
 
+
 const addImgFormValidation = () => {
   imgForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
+    evt.preventDefault();
+    if (pristine.validate()) {
+      submitButton.disabled = true;
+      sendData(new FormData(evt.target))
+        .then(() => {
+          showSuccessModal();
+          closeEditor();
+        })
+        .catch(() => {
+          showErrorModal();
+          closeEditor(false);
+        })
+        .finally(() => {
+          submitButton.disabled = false;
+        });
     }
   });
 };

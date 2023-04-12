@@ -52,7 +52,27 @@ function addElement (row, minimalLength, addSymbol) {
 }
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-export {isEscapeKey,
-  addElement};
 
+const ALERT_MESSAGE = 5000;
+
+const showAlert = (message) => {
+  const alertBlock = document.createElement('div');
+  alertBlock.textContent = message;
+  document.body.append(alertBlock);
+
+  setTimeout(() => {
+    alertBlock.remove();
+  }, ALERT_MESSAGE);
+};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+
+export { isEscapeKey, addElement, showAlert, debounce };
 
