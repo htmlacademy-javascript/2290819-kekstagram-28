@@ -1,4 +1,4 @@
-import { isEscapeKey } from './functions.js';
+import { isEscapeKey } from './util.js';
 
 const Modals = {
   success: getModalElement('success'),

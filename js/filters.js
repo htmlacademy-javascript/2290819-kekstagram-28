@@ -1,6 +1,5 @@
 import { renderMiniatures } from './miniature.js';
-import { createRandomIdGenerator } from './util.js';
-import { debounce } from './functions.js';
+import { createRandomIdGenerator, debounce } from './util.js';
 
 const PICTURES_NUMBER = 10;
 const RERENDER_MINIATURES_TIMEOUT = 500;
