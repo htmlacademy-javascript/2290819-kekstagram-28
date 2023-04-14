@@ -1,4 +1,4 @@
-import { isEscapeKey } from './functions.js';
+import { isEscapeKey } from './util.js';
 import { addImgFormValidation, pristine } from './validation.js';
 import { changePicture } from './scale.js';
 import { resetEffects } from './effects.js';

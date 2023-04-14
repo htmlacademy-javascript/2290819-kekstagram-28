@@ -1,4 +1,4 @@
-import { addPictureClickHandler } from './popup.js';
+import { pictureClickHandler } from './popup.js';
 
 const pictureTemplate = document.querySelector('#picture').content;
 const pictures = document.querySelector('.pictures');
@@ -26,7 +26,7 @@ const renderMiniatures = (miniatures) => {
     pictureLikes.textContent = miniatures[i].likes;
     pictureComments.textContent = miniatures[i].comments.length;
 
-    addPictureClickHandler(picture, miniatures[i]);
+    pictureClickHandler(picture, miniatures[i]);
 
     fragment.append(pictureFragment);
   }

@@ -1,4 +1,4 @@
-import { isEscapeKey } from './functions.js';
+import { isEscapeKey } from './util.js';
 
 const INITIAL_COMMENTS = 5;
 const COMMENTS_STEP = 5;
@@ -9,13 +9,13 @@ const bigLikes = bigPicture.querySelector('.likes-count');
 const bigComments = bigPicture.querySelector('.comments-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
-const userModalCloseElement = bigPicture.querySelector('.big-picture__cancel');
+const userModalClose = bigPicture.querySelector('.big-picture__cancel');
 const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
-let commentsCounter = INITIAL_COMMENTS;
-
 const commentTemplate = document.querySelector('#comment').content;
+
+let commentsCounter = INITIAL_COMMENTS;
 
 const bigPictureClose = () => {
   bigPicture.classList.add('hidden');
@@ -103,7 +103,7 @@ commentLoader.addEventListener('click', () => {
   updateCommentLoader(commentsCounter, socialComments.children.length);
 });
 
-const addPictureClickHandler = (picture, miniature) => {
+const pictureClickHandler = (picture, miniature) => {
   picture.addEventListener('click', () => {
     addBigPictureContent(miniature);
     addBigPictureComments(miniature.comments);
@@ -113,8 +113,8 @@ const addPictureClickHandler = (picture, miniature) => {
   });
 };
 
-userModalCloseElement.addEventListener('click', () => {
+userModalClose.addEventListener('click', () => {
   bigPictureClose();
 });
 
-export { addPictureClickHandler };
+export { pictureClickHandler };
